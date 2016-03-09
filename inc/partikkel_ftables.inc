@@ -28,30 +28,30 @@
 	gidisttab$N		ftgen	0, 0, giMaskSize, 16, 1, giMaskSize, 0, 0	; probability distribution for random grain masking
 
 	gifreqstartmasks$N 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; start freq scalers, per grain
-	gifreqstartmasks$N_A 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gifreqstartmasks$N_B 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gifreqstartmasks\$N_A 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gifreqstartmasks\$N_B 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
 	gifreqendmasks$N	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; end freq scalers, per grain
-	gifreqendmasks$N_A	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gifreqendmasks$N_B	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gifreqendmasks\$N_A	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gifreqendmasks\$N_B	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
 	gifmampmasks$N		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; FM index scalers, per grain
-	gifmampmasks$N_A	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gifmampmasks$N_B	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gifmampmasks\$N_A	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gifmampmasks\$N_B	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
 	gigainmasks$N		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; gain masking table, amplitude for individual grains
-	gigainmasks$N_A		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gigainmasks$N_B		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gigainmasks\$N_A		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gigainmasks\$N_B		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
 	gichannelmasks$N	ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; channel masking table, output routing for individual grains (zero based, a value of 0.0 routes to output 1)
-	gichannelmasks$N_A	ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ... used for mask morphing
-	gichannelmasks$N_B	ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ...
+	gichannelmasks\$N_A	ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ... used for mask morphing
+	gichannelmasks\$N_B	ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ...
 
 	; Wave mix : set gain per source waveform per grain, 
 	; in groups of 5 amp values, reflecting source1, source2, source3, source4, and the 5th slot is for trainlet amplitude.
 	giwavemasks$N		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0
-	giwavemasks$N_A		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ... used for mask morphing
-	giwavemasks$N_B		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ...
+	giwavemasks\$N_A		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ... used for mask morphing
+	giwavemasks\$N_B		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ...
 
 	; write ftable numbers to named chn channels, to enable using strings in the score to point to ftable numbers
 	Sdisttab		sprintf	"gidisttab%i", $N
@@ -83,69 +83,69 @@
 	chnset	gidisttab$N, Sdisttab
 
 	chnset	gifreqstartmasks$N, Sfreqstartmasks
-	chnset	gifreqstartmasks$N_A, Sfreqstartmasks_A
-	chnset	gifreqstartmasks$N_B, Sfreqstartmasks_B
+	chnset	gifreqstartmasks\$N_A, Sfreqstartmasks_A
+	chnset	gifreqstartmasks\$N_B, Sfreqstartmasks_B
 
 	chnset	gifreqendmasks$N, Sfreqendmasks
-	chnset	gifreqendmasks$N_A, Sfreqendmasks_A
-	chnset	gifreqendmasks$N_B, Sfreqendmasks_B
+	chnset	gifreqendmasks\$N_A, Sfreqendmasks_A
+	chnset	gifreqendmasks\$N_B, Sfreqendmasks_B
 
 	chnset	gifmampmasks$N, Sfmampmasks
-	chnset	gifmampmasks$N_A, Sfmampmasks_A
-	chnset	gifmampmasks$N_B, Sfmampmasks_B
+	chnset	gifmampmasks\$N_A, Sfmampmasks_A
+	chnset	gifmampmasks\$N_B, Sfmampmasks_B
 
 	chnset	gigainmasks$N, Sgainmasks
-	chnset	gigainmasks$N_A, Sgainmasks_A
-	chnset	gigainmasks$N_B, Sgainmasks_B
+	chnset	gigainmasks\$N_A, Sgainmasks_A
+	chnset	gigainmasks\$N_B, Sgainmasks_B
 
 	chnset	gichannelmasks$N, Schannelmasks
-	chnset	gichannelmasks$N_A, Schannelmasks_A
-	chnset	gichannelmasks$N_B, Schannelmasks_B
+	chnset	gichannelmasks\$N_A, Schannelmasks_A
+	chnset	gichannelmasks\$N_B, Schannelmasks_B
 
 	chnset	giwavemasks$N, Swavemasks
-	chnset	giwavemasks$N_A, Swavemasks_A
-	chnset	giwavemasks$N_B, Swavemasks_B
+	chnset	giwavemasks\$N_A, Swavemasks_A
+	chnset	giwavemasks\$N_B, Swavemasks_B
 
 ; temporary tables for presets
-	gidisttab$N_pre			ftgen	0, 0, giMaskSize, 16, 1, giMaskSize, 0, 0	; probability distribution for random grain masking
+	gidisttab\$N_pre			ftgen	0, 0, giMaskSize, 16, 1, giMaskSize, 0, 0	; probability distribution for random grain masking
 
-	gifreqstartmasks$N_A_pre 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gifreqstartmasks$N_B_pre 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gifreqstartmasks\$N_A_pre 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gifreqstartmasks\$N_B_pre 	ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
-	gifreqendmasks$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gifreqendmasks$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gifreqendmasks\$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gifreqendmasks\$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
-	gifmampmasks$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gifmampmasks$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gifmampmasks\$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gifmampmasks\$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
-	gigainmasks$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
-	gigainmasks$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
+	gigainmasks\$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ... used for mask morphing
+	gigainmasks\$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1		; ...
 
-	gichannelmasks$N_A_pre		ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ... used for mask morphing
-	gichannelmasks$N_B_pre		ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ...
+	gichannelmasks\$N_A_pre		ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ... used for mask morphing
+	gichannelmasks\$N_B_pre		ftgen	0, 0, giMaskSize, -2,  0, 0,  0.5	; ...
 
-	giwavemasks$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ... used for mask morphing
-	giwavemasks$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ...
+	giwavemasks\$N_A_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ... used for mask morphing
+	giwavemasks\$N_B_pre		ftgen	0, 0, giMaskSize, -2, 0, 0,   1,1,0,0,0	; ...
 
-	gidisttab$N_Master		ftgen	0, 0, giMaskSize*4, 16, 1, giMaskSize*4, 0, 0	; probability distribution for random grain masking
+	gidisttab\$N_Master		ftgen	0, 0, giMaskSize*4, 16, 1, giMaskSize*4, 0, 0	; probability distribution for random grain masking
 
-	gifreqstartmasks$N_A_Master 	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
-	gifreqstartmasks$N_B_Master 	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
+	gifreqstartmasks\$N_A_Master 	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
+	gifreqstartmasks\$N_B_Master 	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
 
-	gifreqendmasks$N_A_Master	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
-	gifreqendmasks$N_B_Master	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
+	gifreqendmasks\$N_A_Master	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
+	gifreqendmasks\$N_B_Master	ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
 
-	gifmampmasks$N_A_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
-	gifmampmasks$N_B_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
+	gifmampmasks\$N_A_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
+	gifmampmasks\$N_B_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
 
-	gigainmasks$N_B_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
-	gigainmasks$N_A_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
+	gigainmasks\$N_B_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ... used for mask morphing
+	gigainmasks\$N_A_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1	; ...
 
-	gichannelmasks$N_A_Master	ftgen	0, 0, giMaskSize*4, -2,  0, 0,  0.5	; ... used for mask morphing
-	gichannelmasks$N_B_Master	ftgen	0, 0, giMaskSize*4, -2,  0, 0,  0.5	; ...
+	gichannelmasks\$N_A_Master	ftgen	0, 0, giMaskSize*4, -2,  0, 0,  0.5	; ... used for mask morphing
+	gichannelmasks\$N_B_Master	ftgen	0, 0, giMaskSize*4, -2,  0, 0,  0.5	; ...
 
-	giwavemasks$N_A_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1,1,0,0,0	; ... used for mask morphing
-	giwavemasks$N_B_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1,1,0,0,0	; ...
+	giwavemasks\$N_A_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1,1,0,0,0	; ... used for mask morphing
+	giwavemasks\$N_B_Master		ftgen	0, 0, giMaskSize*4, -2, 0, 0,   1,1,0,0,0	; ...
 	
 #
 
@@ -157,8 +157,8 @@ $PartikkelTables(1)
 #define ModulatorTables(N) #
 	; multipliers for scaling of modulator signals
 	giModScale$N			ftgen 	0, 0, giNumModulators*giNumParameters, -2, 0		; the table read by the modulation matrix
-	giModScale$N_pre		ftgen 	0, 0, giNumModulators*giNumParameters, -2, 0		; temporary table used when importing presets
-	giModScale$N_Master		ftgen 	0, 0, giNumModulators*giNumParameters*4, -2, 0		; table to hold 4 presets (master preset)
+	giModScale\$N_pre		ftgen 	0, 0, giNumModulators*giNumParameters, -2, 0		; temporary table used when importing presets
+	giModScale\$N_Master		ftgen 	0, 0, giNumModulators*giNumParameters*4, -2, 0		; table to hold 4 presets (master preset)
 #
 $ModulatorTables(1)
 ;$ModulatorTables(2)

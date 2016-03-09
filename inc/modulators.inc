@@ -58,32 +58,32 @@ rireturn
 ; *** LFOs ***
 #define LFO(N)#
 	
-	iLFO$N_Global	chnget	"iLFO$N_Global"
-	kLFO$N_Global	table	iLFO$N_Global, giSinglePreset_M
-	if (kLFO$N_Global < 0.5) && (kNonLegato == 1) kgoto doLFO$Nreinit	; If not LFO set to global mode, then nonlegato events ...
-kgoto noLFO$Nreinit
-doLFO$Nreinit:									; reinitialize LFO
-reinit LFO$Nreinit
-noLFO$Nreinit:
+	iLFO\$N_Global	chnget	"iLFO\$N_Global"
+	kLFO\$N_Global	table	iLFO\$N_Global, giSinglePreset_M
+	if (kLFO\$N_Global < 0.5) && (kNonLegato == 1) kgoto doLFO\$Nreinit	; If not LFO set to global mode, then nonlegato events ...
+kgoto noLFO\$Nreinit
+doLFO\$Nreinit:									; reinitialize LFO
+reinit LFO\$Nreinit
+noLFO\$Nreinit:
 
-	iLFO$N_Amp		chnget	"iLFO$N_Amp"	; (get parmeter index)
-	iLFO$N_Freq		chnget	"iLFO$N_Freq"
-	iLFO$N_FreqBpmSyncIndx	chnget  "iLFO$N_FreqBpmSync"
-	iLFO$N_Wave		chnget	"iLFO$N_Waveform"
-	iiLFO$N_Phase		chnget	"iLFO$N_Phase"
+	iLFO\$N_Amp		chnget	"iLFO\$N_Amp"	; (get parmeter index)
+	iLFO\$N_Freq		chnget	"iLFO\$N_Freq"
+	iLFO\$N_FreqBpmSyncIndx	chnget  "iLFO\$N_FreqBpmSync"
+	iLFO\$N_Wave		chnget	"iLFO\$N_Waveform"
+	iiLFO\$N_Phase		chnget	"iLFO\$N_Phase"
 
-LFO$Nreinit:
-	kLFO$N_Amp		table	iLFO$N_Amp, giSinglePreset_M
+LFO\$Nreinit:
+	kLFO\$N_Amp		table	iLFO\$N_Amp, giSinglePreset_M
 	; filtering to avoid zipper noise in preset interpolation (and modmatrix updates)
-	kLFO$N_Amp		= kLFO$N_Amp+kdenorm
-	kLFO$N_Amp		tonek kLFO$N_Amp, giInterpolFilt
-	kLFO$N_Freq		table	iLFO$N_Freq, giSinglePreset_M
-	kLFO$N_FreqBpmSync	table iLFO$N_FreqBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
-	kLFO$N_Freq		=(((kHostTempoBpm/60)*kLFO$N_Freq)*kLFO$N_FreqBpmSync)+(kLFO$N_Freq*(1-kLFO$N_FreqBpmSync))
-	kLFO$N_Wave		table	iLFO$N_Wave, giSinglePreset_M
-	kLFO$N_Wave		table	kLFO$N_Wave-1, giWaveforms
-	iLFO$N_Phase		table	iiLFO$N_Phase, giSinglePreset_M
-	kLFO$N			oscilikt	kLFO$N_Amp, kLFO$N_Freq, kLFO$N_Wave, iLFO$N_Phase
+	kLFO\$N_Amp		= kLFO\$N_Amp+kdenorm
+	kLFO\$N_Amp		tonek kLFO\$N_Amp, giInterpolFilt
+	kLFO\$N_Freq		table	iLFO\$N_Freq, giSinglePreset_M
+	kLFO\$N_FreqBpmSync	table iLFO\$N_FreqBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
+	kLFO\$N_Freq		=(((kHostTempoBpm/60)*kLFO\$N_Freq)*kLFO\$N_FreqBpmSync)+(kLFO\$N_Freq*(1-kLFO\$N_FreqBpmSync))
+	kLFO\$N_Wave		table	iLFO\$N_Wave, giSinglePreset_M
+	kLFO\$N_Wave		table	kLFO\$N_Wave-1, giWaveforms
+	iLFO\$N_Phase		table	iiLFO\$N_Phase, giSinglePreset_M
+	kLFO$N			oscilikt	kLFO\$N_Amp, kLFO\$N_Freq, kLFO\$N_Wave, iLFO\$N_Phase
 rireturn
 #
 
@@ -97,49 +97,49 @@ $LFO(4)
 #define envelope(N) #	
 ; *** envelope generator ***
 envelope$N:
-	iEnv$NAmp		chnget	"iEnvelope$N_Amp"
-	kEnv$NAmp		table	iEnv$NAmp, giSinglePreset_M
+	iEnv\$NAmp		chnget	"iEnvelope\$N_Amp"
+	kEnv\$NAmp		table	iEnv\$NAmp, giSinglePreset_M
 
 	iHostTempoBpm		= i(kHostTempoBpm)
-	iiDelay$N		chnget	"iEnvelope$N_Delay"
+	iiDelay$N		chnget	"iEnvelope\$N_Delay"
 	iDelay$N		table	iiDelay$N, giSinglePreset_M		; in seconds (in beats if bpm synced to host)
-	iDelay$NBpmSyncIndx	chnget  "iEnvelope$N_DelayBpmSync"
-	iDelay$NBpmSync		table iDelay$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
-	iDelay$N		= (((60/iHostTempoBpm)*iDelay$N)*iDelay$NBpmSync)+(iDelay$N*(1-iDelay$NBpmSync))
+	iDelay\$NBpmSyncIndx	chnget  "iEnvelope\$N_DelayBpmSync"
+	iDelay\$NBpmSync		table iDelay\$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
+	iDelay$N		= (((60/iHostTempoBpm)*iDelay$N)*iDelay\$NBpmSync)+(iDelay$N*(1-iDelay\$NBpmSync))
 
-	iiAttack$N		chnget	"iEnvelope$N_Attack"
+	iiAttack$N		chnget	"iEnvelope\$N_Attack"
 	iAttack$N		table	iiAttack$N, giSinglePreset_M
-	iAttack$NBpmSyncIndx	chnget  "iEnvelope$N_AttackBpmSync"
-	iAttack$NBpmSync	table iAttack$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
-	iAttack$N		= (((60/iHostTempoBpm)*iAttack$N)*iAttack$NBpmSync)+(iAttack$N*(1-iAttack$NBpmSync))
+	iAttack\$NBpmSyncIndx	chnget  "iEnvelope\$N_AttackBpmSync"
+	iAttack\$NBpmSync	table iAttack\$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
+	iAttack$N		= (((60/iHostTempoBpm)*iAttack$N)*iAttack\$NBpmSync)+(iAttack$N*(1-iAttack\$NBpmSync))
 
-	iiDecay$N		chnget	"iEnvelope$N_Decay"
+	iiDecay$N		chnget	"iEnvelope\$N_Decay"
 	iDecay$N		table	iiDecay$N, giSinglePreset_M
-	iDecay$NBpmSyncIndx	chnget  "iEnvelope$N_DecayBpmSync"
-	iDecay$NBpmSync		table iDecay$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
-	iDecay$N		= (((60/iHostTempoBpm)*iDecay$N)*iDecay$NBpmSync)+(iDecay$N*(1-iDecay$NBpmSync))
+	iDecay\$NBpmSyncIndx	chnget  "iEnvelope\$N_DecayBpmSync"
+	iDecay\$NBpmSync		table iDecay\$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
+	iDecay$N		= (((60/iHostTempoBpm)*iDecay$N)*iDecay\$NBpmSync)+(iDecay$N*(1-iDecay\$NBpmSync))
 
-	iiSustain$N		chnget	"iEnvelope$N_Sustain"
+	iiSustain$N		chnget	"iEnvelope\$N_Sustain"
 	iSustain$N		table	iiSustain$N, giSinglePreset_M
 
-	iiRelease$N		chnget	"iEnvelope$N_Release"
+	iiRelease$N		chnget	"iEnvelope\$N_Release"
 	iRelease$N		table	iiRelease$N, giSinglePreset_M
-	iRelease$NBpmSyncIndx	chnget  "iEnvelope$N_ReleaseBpmSync"
-	iRelease$NBpmSync	table iRelease$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
-	iRelease$N		= (((60/iHostTempoBpm)*iRelease$N)*iRelease$NBpmSync)+(iRelease$N*(1-iRelease$NBpmSync))
+	iRelease\$NBpmSyncIndx	chnget  "iEnvelope\$N_ReleaseBpmSync"
+	iRelease\$NBpmSync	table iRelease\$NBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
+	iRelease$N		= (((60/iHostTempoBpm)*iRelease$N)*iRelease\$NBpmSync)+(iRelease$N*(1-iRelease\$NBpmSync))
 
-	iiCurve$N		chnget	"iEnvelope$N_Curve"	
+	iiCurve$N		chnget	"iEnvelope\$N_Curve"	
 	iCurve$N		table	iiCurve$N, giSinglePreset_M
 
 	; workaround for line segment generators, segment duration of zero is not allowed
-	iDelay$N$N		limit 	iDelay$N, 1/kr, 100
+	iDelay\$N$N		limit 	iDelay$N, 1/kr, 100
 	iAttack$N		limit 	iAttack$N, 1/kr, 100
 	iDecay$N 		limit	iDecay$N, 1/kr, 100
 	iRelease$N		limit	iRelease$N, 1/kr, 100
 	iStart$N		chnget	"Envelope$N"				; get the "current" value of the envelope (if the previous note did not allow the envelope to finish)
-	kEnvelope$N		transeg	iStart$N, iDelay$N$N, 0, iStart$N, iAttack$N, -iCurve$N, 1, \
+	kEnvelope$N		transeg	iStart$N, iDelay\$N$N, 0, iStart$N, iAttack$N, -iCurve$N, 1, \
 					iDecay$N, iCurve$N, iSustain$N, 1, 0, iSustain$N
-	kEnvelope$NRel		init 1						; initialize release segment value
+	kEnvelope\$NRel		init 1						; initialize release segment value
 rireturn
 
 ; *** handle the release stage ***		
@@ -153,21 +153,21 @@ noReinitRelease$N:
 	kgoto skiprelease$N
 
 release$N:
-	kEnvelope$NRel		transeg	1, iRelease$N, iCurve$N, 0		; release stage envelope 
+	kEnvelope\$NRel		transeg	1, iRelease$N, iCurve$N, 0		; release stage envelope 
 rireturn
 skiprelease$N:
-	kEnvelope$N		= kEnvelope$N*kEnvelope$NRel			; merge release stage with the normal envelope
+	kEnvelope$N		= kEnvelope$N*kEnvelope\$NRel			; merge release stage with the normal envelope
 				chnset	kEnvelope$N, "Envelope$N"		; and write to chn (start value for retrig)
-	kEnvelope$N		= kEnvelope$N*kEnv$NAmp				; scale envelope with amp value
+	kEnvelope$N		= kEnvelope$N*kEnv\$NAmp				; scale envelope with amp value
 
 ; *** envelope retrig ***
-	iEnv$NRetrig		chnget "iEnvelope$N_Retrig"			
-	kEnv$NRetrig		table	iEnv$NRetrig, giSinglePreset_M		; select if envelope should be retriggered on new events
-	kEnv$NRetrig		= ((kNonLegato == 1) && \			; when no notes are active, and we play the first note (non legato playing)
-			 	  (kEnv$NRetrig < 0.5) ? 1 : kEnv$NRetrig)	; ... we still want to retrigger the envelope
+	iEnv\$NRetrig		chnget "iEnvelope\$N_Retrig"			
+	kEnv\$NRetrig		table	iEnv\$NRetrig, giSinglePreset_M		; select if envelope should be retriggered on new events
+	kEnv\$NRetrig		= ((kNonLegato == 1) && \			; when no notes are active, and we play the first note (non legato playing)
+			 	  (kEnv\$NRetrig < 0.5) ? 1 : kEnv\$NRetrig)	; ... we still want to retrigger the envelope
 
 ; *** handle reinitialization on any new midi event ***
-	if (kRetrig*kEnv$NRetrig) < 0.5  kgoto noReinitEnvelope$N
+	if (kRetrig*kEnv\$NRetrig) < 0.5  kgoto noReinitEnvelope$N
 reinit envelope$N							; reinitialize on new note
 noReinitEnvelope$N:							; skip reinit
 #
@@ -385,9 +385,9 @@ rireturn
 	kTransCount$N		init 0
 	kTransCount$N		= (kAnalysTrans$N == 1 ? kr*kTransAttack$N : kTransCount$N -1)
 	kTransCount$N		limit kTransCount$N, -1, kr
-	kAnalysTrans$NC		= (kTransCount$N > 0 ? 1 : kAnalysTrans$N)
-	aAnalysTrans$NC		upsamp	kAnalysTrans$NC
-	aTransFollow$N		follow2	aAnalysTrans$NC, kTransAttack$N, kTransRelease$N
+	kAnalysTrans\$NC		= (kTransCount$N > 0 ? 1 : kAnalysTrans$N)
+	aAnalysTrans\$NC		upsamp	kAnalysTrans\$NC
+	aTransFollow$N		follow2	aAnalysTrans\$NC, kTransAttack$N, kTransRelease$N
 	kTransFollow$N		downsamp aTransFollow$N
 #
 $TransientFollowing(1)

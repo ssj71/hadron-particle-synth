@@ -201,10 +201,10 @@
 
 
 #define GenerateTablesForSoundfileNames(Voice)#
-	giPartikkel$VoiceSourceWave1Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 1
-	giPartikkel$VoiceSourceWave2Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 2
-	giPartikkel$VoiceSourceWave3Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 3
-	giPartikkel$VoiceSourceWave4Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 4
+	giPartikkel\$VoiceSourceWave1Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 1
+	giPartikkel\$VoiceSourceWave2Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 2
+	giPartikkel\$VoiceSourceWave3Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 3
+	giPartikkel\$VoiceSourceWave4Name	ftgen	0, 0, 256, -2, 0		; empty table to hold ascii codes representing the sound file name for waveslot 4
 #
 $GenerateTablesForSoundfileNames(1)	; for partikkel instance 1
 $GenerateTablesForSoundfileNames(2)	; for partikkel instance 2

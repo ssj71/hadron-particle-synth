@@ -23,10 +23,10 @@
 ; read values from masking table, write to a master masking table (for use as source for HVS)
 #define readMaskTable(tName'presetSlotNum)#
 iMaskIndx 	= 0
-read$tName:
-iVal		table 	iMaskIndx, $tName_pre
-		tableiw iVal, iMaskIndx+(giMaskSize*$presetSlotNum), $tName_Master
-i$tNameVal = iVal
+read\$tName:
+iVal		table 	iMaskIndx, \$tName_pre
+		tableiw iVal, iMaskIndx+(giMaskSize*\$presetSlotNum), \$tName_Master
+i\$tNameVal = iVal
 iMaskIndx	= iMaskIndx + 1
 if iMaskIndx < giMaskSize igoto read$tName
 #
@@ -36,9 +36,9 @@ if iMaskIndx < giMaskSize igoto read$tName
 #define readModFuncTable(tName'presetSlotNum)#
 iIndx	 	= 0
 read$tName:
-iVal		table 	iIndx, $tName_pre
-		tableiw iVal, iIndx+(giModFuncSize*$presetSlotNum), $tName_Master
-i$tNameVal 	= iVal
+iVal		table 	iIndx, \$tName_pre
+		tableiw iVal, iIndx+(giModFuncSize*$presetSlotNum), \$tName_Master
+i\$tNameVal 	= iVal
 iIndx		= iIndx + 1
 if iIndx < giModFuncSize igoto read$tName
 #
@@ -83,25 +83,25 @@ writeName$presetSlot:
 
 
 ; transfer masking tables from "_pre" to "_Master"
-$readMaskTable(gidisttab$N'$presetSlot)
-$readMaskTable(gifreqstartmasks$N_A'$presetSlot)	
-$readMaskTable(gifreqstartmasks$N_B'$presetSlot)
-$readMaskTable(gifreqendmasks$N_A'$presetSlot)
-$readMaskTable(gifreqendmasks$N_B'$presetSlot)
-$readMaskTable(gifmampmasks$N_A'$presetSlot)
-$readMaskTable(gifmampmasks$N_B'$presetSlot)
-$readMaskTable(gigainmasks$N_A'$presetSlot)
-$readMaskTable(gigainmasks$N_B'$presetSlot)
-$readMaskTable(gichannelmasks$N_A'$presetSlot)
-$readMaskTable(gichannelmasks$N_B'$presetSlot)
-$readMaskTable(giwavemasks$N_A'$presetSlot)
-$readMaskTable(giwavemasks$N_B'$presetSlot)
+$readMaskTable(gidisttab\$N'$presetSlot)
+$readMaskTable(gifreqstartmasks\$N_A'$presetSlot)	
+$readMaskTable(gifreqstartmasks\$N_B'$presetSlot)
+$readMaskTable(gifreqendmasks\$N_A'$presetSlot)
+$readMaskTable(gifreqendmasks\$N_B'$presetSlot)
+$readMaskTable(gifmampmasks\$N_A'$presetSlot)
+$readMaskTable(gifmampmasks\$N_B'$presetSlot)
+$readMaskTable(gigainmasks\$N_A'$presetSlot)
+$readMaskTable(gigainmasks\$N_B'$presetSlot)
+$readMaskTable(gichannelmasks\$N_A'$presetSlot)
+$readMaskTable(gichannelmasks\$N_B'$presetSlot)
+$readMaskTable(giwavemasks\$N_A'$presetSlot)
+$readMaskTable(giwavemasks\$N_B'$presetSlot)
 
 ; transfer ModScale table from "_pre" to "_Master"
 	iModIndx 	= 0
 readModScale:
-	iVal		table 	iModIndx, giModScale$N_pre
-			tableiw iVal, iModIndx+(giNumModulators*giNumParameters*$presetSlot), giModScale$N_Master
+	iVal		table 	iModIndx, giModScale\$N_pre
+			tableiw iVal, iModIndx+(giNumModulators*giNumParameters*$presetSlot), giModScale\$N_Master
 	iModIndx	= iModIndx + 1
 if iModIndx < (giNumModulators*giNumParameters) igoto readModScale
 
