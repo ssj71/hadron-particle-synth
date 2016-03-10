@@ -43,8 +43,8 @@
 	kupdate		metro	8
 	krmsL		rms	ainL
 	krmsR		rms	ainR
-	kVU_L		max_k	ainL, kupdate, 0
-	kVU_R		max_k	ainR, kupdate, 0
+	kVU_L		max_k	ainL, kupdate, 1
+	kVU_R		max_k	ainR, kupdate, 1
 
 outkc	1, 8, kVU_L, 0, 1
 outkc	1, 9, kVU_R, 0, 1
@@ -64,8 +64,8 @@ outkc	1, 12, kFunc1, -1, 1
 	iMultiplier1indx   	chnget	"iMultiplier1"
 	kMultiplier1		table iMultiplier1indx, giModulators
 outkc	1, 13, kMultiplier1, -1, 1
-
 */
+
 	endin
 ;***************************************************
 ; master audio out
@@ -84,13 +84,12 @@ outkc	1, 13, kMultiplier1, -1, 1
 	chnset		aSum, 	"liveModeFeedback"		
 
 	; master amp via chn and via midi ctrl no 7
-	kMasterAmp	chnget	"MasterLevel"
+	kMasterAmp	chnget	"MasterLevel"				; input in db, 0db = master amp of 1
 	kMasterAmp	= ampdbfs(kMasterAmp)
-	kMidiCtrl7in	ctrl7	giMidiChannel, 7, 0.0001, 1
+	kMidiCtrl7in	ctrl7	giMidiChannel, 7, 0.0001, 2
 	kMidiAmpChanged	changed	kMidiCtrl7in
-	if kMidiAmpChanged == 0 goto skipCtrl7Write		; write to variable only if midi controller value has changed
-	kMasterAmp	= dbfsamp(kMidiCtrl7in)
-			chnset	kMasterAmp, "MasterLevel"	; overwrite value in chn channel on midi in
+	if kMidiAmpChanged == 0 goto skipCtrl7Write			; write to variable only if midi controller value has changed
+			chnset	dbfsamp(kMidiCtrl7in), "MasterLevel"	; overwrite value in chn channel on midi in
 skipCtrl7Write:
 
 	kMasterAmp	= kMasterAmp * 0dbfs

@@ -24,6 +24,8 @@
 ; You find the available sound files in the /samples directory. Sound files are loaded when assigned.
 ; The classic waveforms "Sine", "Triangle", "Square", "Saw", "Pulse" are also available
 
+i1  0 1 ""
+
 i20 3 1 1 1 "Cello.wav"
 i20 3 1 1 2 "Sine"		; (for classic waveforms, don't use any filename extension)
 i20 3 1 1 3 "ahnoise.wav"
@@ -31,7 +33,26 @@ i20 3 1 1 4 "HangOn.wav"
 
 ;****************
 ; load states, use number 0,1,2,3 for the four state slots
-i 72 1.5 1 "grFilterSynth.spst" 0
-i 72 1.5 1 "grBlackBells.spst" 1
-i 72 1.5 1 "grReedyFormantStepSync.spst" 2
-i 72 1.5 1 "grTrainletDistribution.spst" 3
+
+i 72 2.5 1 "grFilterSynth.spst" 0
+i 72 2.5 1 "grBlackBells.spst" 1
+i 72 2.5 1 "grReedyFormantStepSync.spst" 2
+i 72 2.5 1 "grTrainletDistribution.spst" 3
+
+;****************
+;****************
+/*
+; alternate configuration for use as an audio effect
+; uncomment as needed
+i20 3 1 1 1 "audioInput"
+i20 3 1 1 2 "audioInput"		
+i20 3 1 1 3 "audioInput"
+i20 3 1 1 4 "audioInput"
+
+i 72 1.5 1 "fxGrainFlanger.spst" 0
+i 72 1.5 1 "fxLowpassRand.spst" 1
+i 72 1.5 1 "fxTwinPeaks.spst" 2
+i 72 1.5 1 "fxGrainFlanger2.spst" 3
+*/
+
+;****************

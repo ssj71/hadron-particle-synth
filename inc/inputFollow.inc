@@ -20,8 +20,13 @@
 */
 
 	
-	kinChan	chnget 	"LiveSamplingChannel"			; audio input channel for sampling
-	a1	inch	kinChan					; signal input
+;	kinChan	chnget 	"LiveSamplingChannel"			; audio input channel for sampling
+;	a1	inch	kinChan					; signal input
+
+	; Sum left and right inputs to mono
+	aL, aR ins
+	a1 = (aL + aR) * 0.5
+
 	/*
 	 ;test signal
 	a1	diskin "C:/Projects/Single_E_bent.wav", 1, 0, 1

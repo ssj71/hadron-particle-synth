@@ -68,7 +68,7 @@
 	giMidiNoteNum	ftgen	0, 0, giMaxVoices, 2, 0
 	giMidiVelocity	ftgen	0, 0, giMaxVoices, 2, 0
 	giMidiAmp	ftgen	0, 0, giMaxVoices, 2, 0
-	giMidiRelease	ftgen	0, 0, giMaxVoices, 2, 0
+	giMidiRelease	ftgen	0, 0, giMaxVoices, 2, 0, 0
 
 ; init table write position for live sampling
 	gkstart		init 0

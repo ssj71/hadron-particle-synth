@@ -1,6 +1,6 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac -M0 -+rtmidi=mme -b2048 -B4096 -f
+-odac -M2 -+rtmidi=mme -b2048 -B4096 -f
 </CsOptions>
 <CsInstruments>
 
@@ -47,7 +47,7 @@ endin
 
 #include "Hadron.sco"
 
-i3	3	$SCORELEN		; enable FLTK control
+i3	3	86400		; enable FLTK control
 
 #include "hadron_cs_standalone_sco.inc"
 

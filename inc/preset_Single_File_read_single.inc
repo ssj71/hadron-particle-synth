@@ -21,6 +21,8 @@
 
 Spresetfile	strget p4
 Spresetfile	strcat	"states/", Spresetfile
+;puts Spresetfile, 1
+;puts gSpath, 1
 Spresetfile	strcat	gSpath, Spresetfile
 
 ftload Spresetfile, 1, giSinglePreset, gidisttab1, \

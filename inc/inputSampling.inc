@@ -20,8 +20,13 @@
 */
 
 	
-	kinChan		chnget "LiveSamplingChannel"	; audio input channel for sampling
-	a1		inch	kinChan			; signal input
+;	kinChan		chnget "LiveSamplingChannel"	; audio input channel for sampling
+;	a1		inch	kinChan			; signal input
+
+	; Sum left and right inputs to mono
+	aL, aR ins
+	a1 = (aL + aR) * 0.5
+
 
 ; create a gap at start of recording (so start of next segment can not be heard at end of this segment)
 	ireleasetime	= 0.1

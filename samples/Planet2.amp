@@ -1,4 +1,4 @@
-======= TABLE 279 size: 8192 values ======
+======= TABLE 295 size: 8192 values ======
 flen: 8192
 lenmask: 8191
 lobits: 11
@@ -15,7 +15,7 @@ end2: 0
 soundend: 0
 flenfrms: 8192
 nchnls: 1
-fno: 279
+fno: 295
 gen01args.gen01: 0.000000
 gen01args.ifilno: 0.000000
 gen01args.iskptim: 0.000000
@@ -24,7 +24,6 @@ gen01args.channel: 0.000000
 gen01args.sample_rate: 0.000000
 ---------END OF HEADER--------------
 6790.000000
-0.000000
 0.000326
 0.000638
 0.001657
@@ -6813,6 +6812,7 @@ gen01args.sample_rate: 0.000000
 0.035062
 0.032442
 0.029491
+0.000000
 0.000000
 0.000000
 0.000000

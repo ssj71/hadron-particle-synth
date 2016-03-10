@@ -35,11 +35,17 @@ i50	1	$SCORELEN		; check record pointer reset
 i52	1	$SCORELEN		; live follow input enable
 
 i 70 	1.1 	1 "_unassigned.spst"	; read default preset as single preset 
+
 i 75 	1.1 	1			; and copy values to default preset table
 
+i 73	1.3	1 "default.mpst" 1	; read default master preset
 
-i 73	1.1	1 "default.mpst" 1	; read default master preset
-i 74 	1.2 	-1			; and start preset interpolation for master presets
+i 72 	1.4 	1 "_unassigned.spst" 0	; read default preset as preset 0 in master
+i 72 	1.4 	1 "_unassigned.spst" 1	; read default preset as preset 0 in master
+i 72 	1.4 	1 "_unassigned.spst" 2	; read default preset as preset 0 in master
+i 72 	1.4 	1 "_unassigned.spst" 3	; read default preset as preset 0 in master
+
+i 74 	1.42 	-1			; and start preset interpolation for master presets
 
 i 89 	1	.01  	60 60		; midi note init
 
@@ -63,16 +69,17 @@ i81 	1.5 	$SCORELEN	"freqendmasks1"
 ;********************************
 ; modulator matrix
 i90	1.6	$SCORELEN		; modulators 
+
 i91	1	$SCORELEN		; mod matrix, and merge modulation with parameter values 
 ;********************************
 ;********************************
 
 ; enable always on instruments 
-i293	1.4	$SCORELEN		; bandpass1
-i294	1.4	$SCORELEN		; bandpass2
-i295	1.4	$SCORELEN		; lowpass
-i296	1.4	$SCORELEN		; bandpass3
-i297	1.4	$SCORELEN		; delay
+i293	1.45	$SCORELEN		; bandpass1
+i294	1.45	$SCORELEN		; bandpass2
+i295	1.45	$SCORELEN		; lowpass
+i296	1.45	$SCORELEN		; bandpass3
+i297	1.45	$SCORELEN		; delay
 i400	1	$SCORELEN		; master audio out
 
 

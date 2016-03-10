@@ -267,23 +267,23 @@ setWaveformNumber:
 	iTestS		= (iTestS2 == 0 ? 1 : iTestS)
 	iTestS		= (iTestS3 == 0 ? 1 : iTestS)
 	iTestS		= (iTestS4 == 0 ? 1 : iTestS)
-	if iTestS == 0 goto noSmooth\$Voice$Slot
+	if iTestS == 0 goto noSmooth$Voice.$Slot.
 	ilen		strlen SwaveName
 	SwaveName	strsub	SwaveName, 0, ilen-6
 	puts SwaveName, 1
-noSmooth\$Voice\$Slot:
+noSmooth$Voice.$Slot.:
 
 ; then do the conversion from chanracters to ascii
 	ipos		= -1
 	iStrLen		strlen SwaveName
-WriteAsciiLoop_\$Voice_\$Slot:
+WriteAsciiLoop_$Voice._$Slot.:
 	ipos		= ipos + 1
 	iAscii		strchar	SwaveName, ipos
 	;print iAscii
 ; write ascii to table 
-	tableiw		iAscii, ipos, giPartikkel\$VoiceSourceWave\$SlotName	
-	if ipos < iStrLen goto WriteAsciiLoop_\$Voice_$Slot
-	SoutvalName	sprintf	"p%iwav%iname", $Voice, $Slot
+	tableiw		iAscii, ipos, giPartikkel$Voice.SourceWave$Slot.Name	
+	if ipos < iStrLen goto WriteAsciiLoop_$Voice._$Slot.
+	SoutvalName	sprintf	"p%iwav%iname", $Voice., $Slot.
 			;outvalue SoutvalName, SwaveName
 #
 

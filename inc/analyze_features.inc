@@ -26,11 +26,15 @@
 	iRelease	= 0.15 				;(changed from 0.25, when also using the follow2 output as the amplitude analysis channel)
 	aFollow		follow2	a1, iAttack, iRelease
 	
-	iResponse	= 10				; response time in milliseconds
-	kThresh		= 0.4				; attack threshold (in dB)
 	
+	ahp		butterhp a1, 100
+	iResponse	= 20				; response time in milliseconds
+	kThresh		= 15				; attack threshold (in dB)
+	iAttackT	= 0.01
+	iReleaseT	= 0.25 				
+	aFollowT	follow2	ahp, iAttack, iRelease
 	kFollow		downsamp	aFollow		
-	kFollowdb	= dbfsamp(kFollow+1)			; convert to dB
+	kFollowdb	= dbfsamp(kFollow)			; convert to dB
 	kFollowDel	delayk	kFollowdb, iResponse/1000	; delay with response time for comparision of levels
 	
 	;attackAnalyze

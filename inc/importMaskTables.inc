@@ -24,6 +24,7 @@
 
 	; first, work around the limitation of only one string argument in an instr call
 	Sstring		strget p4				; the string contains "maskfunc A/B filename"
+        imode           = p5                                    ; import mode (0=ascii, 1=ftload)
 
 	iSpace		strindex	Sstring, " "		; find space in string
 	;print 		iSpace
@@ -43,9 +44,13 @@
 	imaskTableNum	chnget SmaskTable
 	;print imaskTableNum
 
+if imode == 0 then
 	; read from file to generate new ftable in place of the previous mask table
 	iTemp		ftgen	imaskTableNum, 0, giMaskSize, -23, Sfilename
-
+else
+        Sfilename_p     sprintf         "mask_files/%s", Sfilename
+                        ftload          Sfilename_p, 1, imaskTableNum
+endif
 
 ; force update table morf function
 	kforceUpdate	metro	0.1

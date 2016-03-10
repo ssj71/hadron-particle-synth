@@ -23,21 +23,21 @@
 #define GenerateStringFromAscii(tableName)#
 	Sout	= ""
 	ipos	= 0
-iterate$tableName:
-	iAscii	table	ipos, $tableName
-	if iAscii == 0 goto done$tableName
+iterate$tableName.:
+	iAscii	table	ipos, $tableName.
+	if iAscii == 0 goto done$tableName.
 	Schar	sprintf	"%c", iAscii
 	Sout	strcat Sout, Schar
 	ipos	= ipos + 1
-	goto iterate$tableName
-done$tableName:
+	goto iterate$tableName.
+done$tableName.:
 	;puts	Sout, 1
 #
 
 Spresetfile	strget p4
 Spresetfile	strcat	"presets/", Spresetfile
 Spresetfile	strcat	gSpath, Spresetfile
-Stest		sprintf "master preset handling: %s", Spresetfile
+Stest		sprintf "m preset handling: %s", Spresetfile
 puts Stest, 1
 if p5 > 0 goto read
 
@@ -98,19 +98,19 @@ giMasterParams ;; *(Live sampling table not read)* ;;, giLiveSamplAudioTable, gi
 ; load each single preset
 $GenerateStringFromAscii(giSubPresetName1)
 Sscoreline	sprintf	{{i 72 0 1 "%s" 0}}, Sout
-scoreline_i	Sscoreline
+;scoreline_i	Sscoreline
 
 $GenerateStringFromAscii(giSubPresetName2)
 Sscoreline	sprintf	{{i 72 0 1 "%s" 1}}, Sout
-scoreline_i	Sscoreline
+;scoreline_i	Sscoreline
 
 $GenerateStringFromAscii(giSubPresetName3)
 Sscoreline	sprintf	{{i 72 0 1 "%s" 2}}, Sout
-scoreline_i	Sscoreline
+;scoreline_i	Sscoreline
 
 $GenerateStringFromAscii(giSubPresetName4)
 Sscoreline	sprintf	{{i 72 0 1 "%s" 3}}, Sout
-scoreline_i	Sscoreline
+;scoreline_i	Sscoreline
 
 ; parse ascii code representing sound file names, call instr 20 to assign sound files to wave slots
 

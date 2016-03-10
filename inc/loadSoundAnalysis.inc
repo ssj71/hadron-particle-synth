@@ -35,13 +35,14 @@
 	SampTable	strcat SfnameRoot, "AmpAnalysis"
 	ScpsTable	strcat SfnameRoot, "CpsAnalysis"
 	StransTable	strcat SfnameRoot, "TransientAnalysis"
-	iAmpFtno	ftgen	0, 0, 2, 2, 0		; allocate table for importing table data from file (size is just an estimate)
-	iCpsFtno	ftgen	0, 0, 2, 2, 0		; allocate table for importing table data from file (size is just an estimate)
-	iTransFtno	ftgen	0, 0, 2, 2, 0		; allocate table for importing table data from file (size is just an estimate)
-;	puts Sampfile, 1
-;	print ftlen(iAmpFtno)
+	iAmpFtno	ftgen	0, 0, 65536, 2, 0		; allocate table for importing table data from file (size is just an estimate)
+	iCpsFtno	ftgen	0, 0, 65536, 2, 0		; allocate table for importing table data from file (size is just an estimate)
+	iTransFtno	ftgen	0, 0, 65536, 2, 0		; allocate table for importing table data from file (size is just an estimate)
+	puts Sampfile, 1
+	puts Scpsfile, 1
+	print ftlen(iAmpFtno)
 	ftload 		Sampfile, 1, iAmpFtno
-;	print ftlen(iAmpFtno)
+	print ftlen(iAmpFtno)
 	ftload 		Scpsfile, 1, iCpsFtno
 	ftload 		Stransfile, 1, iTransFtno
 ;	puts SampTable, 1

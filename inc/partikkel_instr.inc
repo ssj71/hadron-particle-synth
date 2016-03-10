@@ -26,80 +26,80 @@
 ; calculation of timepoint, transpose, and waveform selection when using live sampled segments
 
 
-#define calcWaveformParameters(W) #
+#define calcWaveformParameters(W'N) #
 
-if kwaveform$W < 10000 kgoto noSegment$W 
+if kwaveform$W. < 10000 kgoto noSegment$W. 
 	; find audio segment start and end position
-	kSegment$W		= kwaveform$W - 10000
-	kStart$W		table kSegment$W, giLiveSamplAttackTable
-	kEnd$W			table kSegment$W+1, giLiveSamplAttackTable
-	kEnd$W			= kEnd$W-(isample_release*sr)			; do not include release segment of recording when calculating endpoint
+	kSegment$W.		= kwaveform$W. - 10000
+	kStart$W.		table kSegment$W., giLiveSamplAttackTable
+	kEnd$W.			table kSegment$W.+1, giLiveSamplAttackTable
+	kEnd$W.			= kEnd$W.-(isample_release*sr)			; do not include release segment of recording when calculating endpoint
 
 	; adjust samplepos
-	kLen$W			= kEnd$W-kStart$W
-	kLength$W		= kLen$W/giLiveSamplTableLen
-	ksamplepos\$Wdirtest	= ksamplepos$W					; save samplepos in normalized range to be used for playback direction testing later
-	ksamplepos$W 		= (ksamplepos$W*kLength$W) + (kStart$W/giLiveSamplTableLen)
+	kLen$W.			= kEnd$W.-kStart$W.
+	kLength$W.		= kLen$W./giLiveSamplTableLen
+	ksamplepos$W.dirtest	= ksamplepos$W.					; save samplepos in normalized range to be used for playback direction testing later
+	ksamplepos$W. 		= (ksamplepos$W.*kLength$W.) + (kStart$W./giLiveSamplTableLen)
 
-	;Stest		sprintfk "segm, start, end, len: %i %f %f %f", kSegment$W, kStart$W, kEnd$W, (kEnd$W-kStart$W)/sr
-	;puts	Stest, kSegment$W+1
-	;printk2 ksamplepos$W
+	;Stest		sprintfk "segm, start, end, len: %i %f %f %f", kSegment$W., kStart$W., kEnd$W., (kEnd$W.-kStart$W.)/sr
+	;puts	Stest, kSegment$W.+1
+	;printk2 ksamplepos$W.
 
 	; adjust kwavekey
-	kwavekey\$W_tmp		= cent(kwavfreq$W) * (sr/giLiveSamplTableLen)
+	kwavekey$W._tmp		= cent(kwavfreq$W.) * (sr/giLiveSamplTableLen)
 
 	; set live sampling table as waveform
-	kwaveform\$Wa		= giLiveSamplAudioTable
-	kgoto passWaveform$W
+	kwaveform$W.a		= giLiveSamplAudioTable
+	kgoto passWaveform$W.
 
-noSegment$W:
-	kLen$W			tableng	kwaveform$W
-	k_origFactor$W		divz 261.625565, korig_key$W, 1
-	kwavekey\$W_tmp		= cent(kwavfreq$W) * (sr/kLen$W) * k_origFactor$W
+noSegment$W.:
+	kLen$W.			tableng	kwaveform$W.
+	k_origFactor$W.		divz 261.625565, korig_key$W., 1
+	kwavekey$W._tmp		= cent(kwavfreq$W.) * (sr/kLen$W.) * k_origFactor$W.
 	; if waveform is a single cycle wave, set original wavekey to 261.625565 (261.625565Hz)
-	kwavekey\$W_tmp		= (gkSingleCycle$W == 0 ? 261.625565*cent(kwavfreq$W) : kwavekey\$W_tmp)
-	kwaveform\$Wa		= kwaveform$W
+	kwavekey$W._tmp		= (gkSingleCycle$W. == 0 ? 261.625565*cent(kwavfreq$W.) : kwavekey$W._tmp)
+	kwaveform$W.a		= kwaveform$W.
 
-if kwaveform$W != giLiveFeed kgoto passWaveform$W
+if kwaveform$W. != giLiveFeed kgoto passWaveform$W.
 	; adjust samplepos for live follow mode
-	igDlySpos\$WBpmSyncIndx	chnget  "iPartikkel\$NGrainDelayTime\$WBpmSync"
-	kgDlySpos\$WBpmSyncIndx	table igDlySpos\$WBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
-	ksamplepos$W		=(((60/kHostTempoBpm)*ksamplepos$W*(4/giLiveFeedLenSec))*kgDlySpos\$WBpmSyncIndx)+(ksamplepos$W*(1-kgDlySpos\$WBpmSyncIndx))
+	igDlySpos$W.BpmSyncIndx	chnget  "iPartikkel$N.GrainDelayTime$W.BpmSync"
+	kgDlySpos$W.BpmSyncIndx	table igDlySpos$W.BpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
+	ksamplepos$W.		=(((60/kHostTempoBpm)*ksamplepos$W.*(4/giLiveFeedLenSec))*kgDlySpos$W.BpmSyncIndx)+(ksamplepos$W.*(1-kgDlySpos$W.BpmSyncIndx))
 	; if samplepos is close to zero, see to it that grain playback does not cross the record pointer border,
 	; as this will delay the (live feed) sound for the length of a livefeed sample buffer.
 	; So, check grain duration and transpose, limit samplepos accordingly
-	ksamplepos$W		limit ksamplepos$W, (kduration*cent(kwavfreq$W)*kwavfreq)/(giLiveFeedLenSec*1000), 1
+	ksamplepos$W.		limit ksamplepos$W., (kduration*cent(kwavfreq$W.)*kwavfreq)/(giLiveFeedLenSec*1000), 1
 	;printk2 ksamplepos1
 	; make samplepos follow the record pointer instead of staying at a stationary value, makes live follow samplepos into "grain delay time"
-	ksamplepos$W 		= (kstartFollow/giLiveFeedLen) - ksamplepos$W
-	ksamplepos$W		= (ksamplepos$W < 0 ? ksamplepos$W+1 : ksamplepos$W)	; wrap around on undershoot
-	ksamplepos$W		= (ksamplepos$W > 1 ? ksamplepos$W-1 : ksamplepos$W)	; wrap around on overshoot
+	ksamplepos$W. 		= (kstartFollow/giLiveFeedLen) - ksamplepos$W.
+	ksamplepos$W.		= (ksamplepos$W. < 0 ? ksamplepos$W.+1 : ksamplepos$W.)	; wrap around on undershoot
+	ksamplepos$W.		= (ksamplepos$W. > 1 ? ksamplepos$W.-1 : ksamplepos$W.)	; wrap around on overshoot
 
-	kwavekey$W		= kwavekey\$W_tmp
-	kgoto passWaveform$W
+	kwavekey$W.		= kwavekey$W._tmp
+	kgoto passWaveform$W.
 
-passWaveform$W:
+passWaveform$W.:
 
-	kSoundLen$W		= kLen$W/sr	; waveform length in seconds
-				chnset	kSoundLen$W, "SoundLength$W"
+	kSoundLen$W.		= kLen$W./sr	; waveform length in seconds
+				chnset	kSoundLen$W., "SoundLength$W."
 	; avoid wrapping around of samplepos for sampled (and live sampled) segments
-	ksamplepos$W		mirror ksamplepos$W, 0, 1
+	ksamplepos$W.		mirror ksamplepos$W., 0, 1
 	
 
 	; filtering to avoid zipper noise in preset interpolation (and modmatrix updates)
-	;kwavekey\$W_tmp		= kwavekey$W_tmp+kdenorm
-	;kwavekey\$W_tmp		tonek kwavekey\$W_tmp, giInterpolFilt
+	;kwavekey$W._tmp		= kwavekey$W._tmp+kdenorm
+	;kwavekey$W._tmp		tonek kwavekey$W._tmp, giInterpolFilt
 
-if kwaveform$W == giLiveFeed kgoto noChangeDirection$W
-if kwaveform$W >= 10000 kgoto liveSampleChangeDirection$W
+if kwaveform$W. == giLiveFeed kgoto noChangeDirection$W.
+if kwaveform$W. >= 10000 kgoto liveSampleChangeDirection$W.
 	; invert read direction (wavekey) if grain duration is longer than the remaining (after samplepos) part of the wave source
-	kwavekey$W		= (kduration*cent(kwavfreq$W)*kwavfreq > (1-ksamplepos$W)*kSoundLen$W*1000 ? kwavekey\$W_tmp*-1 : kwavekey\$W_tmp)
-kgoto noChangeDirection$W
-liveSampleChangeDirection$W:
+	kwavekey$W.		= (kduration*cent(kwavfreq$W.)*kwavfreq > (1-ksamplepos$W.)*kSoundLen$W.*1000 ? kwavekey$W._tmp*-1 : kwavekey$W._tmp)
+kgoto noChangeDirection$W.
+liveSampleChangeDirection$W.:
 	; special handling of live sampled segments 
-	kwavekey$W		= (kduration*cent(kwavfreq\$W)*kwavfreq > (1-ksamplepos\$Wdirtest)*kSoundLen$W*1000 ? kwavekey\$W_tmp*-1 : kwavekey\$W_tmp)
+	kwavekey$W.		= (kduration*cent(kwavfreq$W.)*kwavfreq > (1-ksamplepos$W.dirtest)*kSoundLen$W.*1000 ? kwavekey$W._tmp*-1 : kwavekey$W._tmp)
 
-noChangeDirection$W:
+noChangeDirection$W.:
 
 
 #
@@ -118,7 +118,7 @@ noChangeDirection$W:
 	kHostTempoBpm		limit	kHostTempoBpm, 20, 600
 
 ; amplitude
-	iampIndx		chnget  "iPartikkel\$NAmp"
+	iampIndx		chnget  "iPartikkel$N.Amp"
 	kamp			table iampIndx, giSinglePreset_M			; output amplitude
 
 /*
@@ -132,9 +132,10 @@ noChangeDirection$W:
 */
 
 ; grain rate
-	igRateIndx		chnget  "iPartikkel\$NGrainRate"
+	igRateIndx		chnget  "iPartikkel$N.GrainRate"
 	kGrainRate		table igRateIndx, giSinglePreset_M		; number of grains per second (per beat if synced to hostBpm)
-	igRateBpmSyncIndx	chnget  "iPartikkel\$NGrainRateBpmSync"
+	;kGrainRate		= kGrainRate + 0.00001
+	igRateBpmSyncIndx	chnget  "iPartikkel$N.GrainRateBpmSync"
 	kGrainRateBpmSync	table igRateBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
 	kGrainRate		=(((kHostTempoBpm/60)*kGrainRate)*kGrainRateBpmSync)+(kGrainRate*(1-kGrainRateBpmSync))
 ;	printk2 kGrainRate
@@ -145,17 +146,17 @@ noChangeDirection$W:
 /* Commented out until sidechaining actiavated
 ;****
 ; soft sync
-	id$N			= $N
-	gapulse$N		init 0
-	gaphase$N		init 0
-	isynGravIndx		chnget  "iPartikkel\$NSyncGravity"
+	id$N.			= $N.
+	gapulse$N.		init 0
+	gaphase$N.		init 0
+	isynGravIndx		chnget  "iPartikkel$N.SyncGravity"
 	ksyncGravity		table isynGravIndx, giSinglePreset_M		; sync amount control
 	; get external audio transients, and their rate
 	aClockIn		chnget	"externalAudioClock"			; external audio analyzed for transients (pulse signal)
 	kRateClockIn		chnget	"externalClockRate"			; estimated rate of external pulses (number of pulses per second)
 	kGravityCenter		divz kGrainRate, kRateClockIn, 1		; get ratio between grain rate and external clock rate, used as...
 	kGravityCenter		limit kGravityCenter, 0.01, 1			; "sync gravitation center" expressed as a fraction of the time between grains
-	asyncPolarity		table gaphase$N*(1/kGravityCenter), giSquare, 1	; use the phase of partikkelsync instance n ($N) to find sync polarity for the sync signal.
+	asyncPolarity		table gaphase$N.*(1/kGravityCenter), giSquare, 1	; use the phase of partikkelsync instance n ($N.) to find sync polarity for the sync signal.
 	async			=(aClockIn*0.5)*ksyncGravity*asyncPolarity*-1	; prepare sync signal with polarity and strength
 
 
@@ -192,7 +193,7 @@ kGrainRateD	= kNewRate*(1-kcMix) + kGrainRate*kcMix
 ; the following temporarily substitutes the sidechaining input calculations
 kGrainRateD	= kGrainRate
 async		= 0
-id$N		= $N
+id$N.		= $N.
 
 ; reset grain clock on new midi note
 	amidiClockTrigger	chnget "midiGrainClockTrigger"
@@ -201,13 +202,14 @@ id$N		= $N
 	async			= async + (amidiClockTrigger*kGrainRateSwitch)
 
 ; grain rate FM
-	iGrFmFreqIndx		chnget "iPartikkel\$NGrFmFreq"		
+	iGrFmFreqIndx		chnget "iPartikkel$N.GrFmFreq"		
 	kGrFmFreq		table iGrFmFreqIndx, giSinglePreset_M		; FM freq for modulating the grainrate (cycles per beat if synced to hostBpm)
-	iGrFmFreqBpmSyncIndx	chnget  "iPartikkel\$NGrFmFreqBpmSync"
+	iGrFmFreqBpmSyncIndx	chnget  "iPartikkel$N.GrFmFreqBpmSync"
 	kGrFmFreqBpmBpmSync	table iGrFmFreqBpmSyncIndx, giSinglePreset_M	; sync index for bpm sync to host
 	kGrFmFreq		=(((kHostTempoBpm/60)*kGrFmFreq)*kGrFmFreqBpmBpmSync)+(kGrFmFreq*(1-kGrFmFreqBpmBpmSync))
-	iGrFmIndexIndx		chnget "iPartikkel\$NGrFmIndex"					
+	iGrFmIndexIndx		chnget "iPartikkel$N.GrFmIndex"					
 	kGrFmIndex		table iGrFmIndexIndx, giSinglePreset_M		; FM index for modulating the grainrate (normally kept in a 0.0 to 1.0 range)
+
 	; filtering to avoid zipper noise in preset interpolation (and modmatrix updates)
 	kGrFmFreq		= kGrFmFreq+kdenorm
 	kGrFmIndex		= kGrFmIndex+kdenorm
@@ -233,29 +235,30 @@ id$N		= $N
 */
 
 ; distribution 
-	idistrIndx		chnget "iPartikkel\$NDistribution"	
+	idistrIndx		chnget "iPartikkel$N.Distribution"	
 	kdistribution		table idistrIndx, giSinglePreset_M		; grain random distribution in time
-	idisttab		= gidisttab$N					; probability distribution for random grain masking
+	idisttab		= gidisttab$N.					; probability distribution for random grain masking
 
 ; grain shape
-	iGrainDurIndx		chnget "iPartikkel\$NGrainDur"		
+	iGrainDurIndx		chnget "iPartikkel$N.GrainDur"		
 	kGrainDur		table iGrainDurIndx, giSinglePreset_M		; length of each grain relative to grain rate 
-	kduration		divz (kGrainDur*1000), kGrainRateD, 10		; grain dur in milliseconds, relative to grain rate
+	kGrainRateDd		= ((kGrainRateD<0.1)&&(kGrainRateD>-0.1)?0:kGrainRateD)
+	kduration		divz (kGrainDur*1000), kGrainRateDd, 10		; grain dur in milliseconds, relative to grain rate
 	kduration		= abs(kduration)				; ... in case some mapping method makes it negative
 
 	ienv_attack		= giSigmoRise 					; grain attack shape (from table)
 	ienv_decay		= giSigmoFall 					; grain decay shape (from table)
-	isusAmtIndx		chnget "iPartikkel\$NSustain"		
+	isusAmtIndx		chnget "iPartikkel$N.Sustain"		
 	ksustain_amount		table isusAmtIndx, giSinglePreset_M		; balance between enveloped time(attack+decay) and sustain level time, 0.0 = no time at sustain level
-	iadrIndx		chnget "iPartikkel\$NAdRatio"		
+	iadrIndx		chnget "iPartikkel$N.AdRatio"		
 	ka_d_ratio		table iadrIndx, giSinglePreset_M			; balance between attack time and decay time, 0.0 = zero attack time and full decay time
 
-	ienv2amtIndx		chnget "iPartikkel\$NEnv2Amt"		
+	ienv2amtIndx		chnget "iPartikkel$N.Env2Amt"		
 	kenv2amt		table ienv2amtIndx, giSinglePreset_M		; amount of secondary enveloping per grain (e.g. for fof synthesis)
 	ienv2tab		= giExpFall 					; secondary grain shape (from table), enveloping the whole grain if used
 
 ; grain pitch (transpose, or "playback speed")
-	iwavfreqIndx		chnget "iPartikkel\$NGrainPitch"		
+	iwavfreqIndx		chnget "iPartikkel$N.GrainPitch"		
 	kwavfreq		table iwavfreqIndx, giSinglePreset_M		; (master) transposition (playback speed) of audio inside grains
 										; for audio files, original playback speed is achieved at kwavfreq = 1.0
 										; for single cycle waveforms, kwavfreq sets the fundamental pitch
@@ -264,18 +267,18 @@ id$N		= $N
 										; (see above)
 
 ; pitch sweep
-	isweepshapeIndx		chnget "iPartikkel\$NSweepshape"			
+	isweepshapeIndx		chnget "iPartikkel$N.Sweepshape"			
 	ksweepshape		table isweepshapeIndx, giSinglePreset_M		; grain wave pitch sweep shape (sweep speed), 0.5 is linear sweep
-	iwavfreqstarttab 	= gifreqstartmasks$N				; start freq scalers (ftable), per grain
-	iwavfreqendtab		= gifreqendmasks$N				; end freq scalers (ftable), per grain
+	iwavfreqstarttab 	= gifreqstartmasks$N.				; start freq scalers (ftable), per grain
+	iwavfreqendtab		= gifreqendmasks$N.				; end freq scalers (ftable), per grain
 
 ; FM of grain pitch (playback speed)
-	iPtchFmFreqIndx		chnget "iPartikkel\$NPitchFmFreq"			
+	iPtchFmFreqIndx		chnget "iPartikkel$N.PitchFmFreq"			
 	kPtchFmFreq		table iPtchFmFreqIndx, giSinglePreset_M			; FM freq, modulating waveform pitch, (cycles per beat if synced to hostBpm)
-	iPitchFmFreqBpmSyncIndx	chnget  "iPartikkel\$NPitchFmFreqBpmSync"
+	iPitchFmFreqBpmSyncIndx	chnget  "iPartikkel$N.PitchFmFreqBpmSync"
 	kPitchFmFreqBpmSync	table iPitchFmFreqBpmSyncIndx, giSinglePreset_M		; sync index for bpm sync to host
 	kPtchFmFreq		=(((kHostTempoBpm/60)*kPtchFmFreq)*kPitchFmFreqBpmSync)+(kPtchFmFreq*(1-kPitchFmFreqBpmSync))
-	iPtchFmIndexIndx	chnget "iPartikkel\$NPitchFmIndex"			; FM index, modulating waveform pitch
+	iPtchFmIndexIndx	chnget "iPartikkel$N.PitchFmIndex"			; FM index, modulating waveform pitch
 	kPtchFmIndex		table iPtchFmIndexIndx, giSinglePreset_M		; FM index, modulating waveform pitch
 	; filtering to avoid zipper noise in preset interpolation (and modmatrix updates)
 	kPtchFmFreq		= kPtchFmFreq+kdenorm
@@ -284,18 +287,18 @@ id$N		= $N
 	kPtchFmIndex		tonek kPtchFmIndex, giInterpolFilt
 
 	iPtchFmWave		= giSine						; FM waveform, modulating waveform pitch
-	ifmamptab		= gifmampmasks$N					; FM index scalers (ftable), per grain
+	ifmamptab		= gifmampmasks$N.					; FM index scalers (ftable), per grain
 	ifmenv			= giLinFall 					; FM index envelope, over each grain (from table)
 	kPtchFmIndex		= kPtchFmIndex + (kPtchFmIndex*kPtchFmFreq*0.00001) 	; FM index scaling formula
 	awavfm			oscil	kPtchFmIndex, kPtchFmFreq, iPtchFmWave		; audio input for frequency modulation inside grain
 
 ; trainlet parameters
 	icosine			= giCosine					; needs to be a cosine wave to create trainlets
-	iTrainCpsIndx		chnget "iPartikkel\$NTrainCps"			
+	iTrainCpsIndx		chnget "iPartikkel$N.TrainCps"			
 	kTrainCps		table iTrainCpsIndx, giSinglePreset_M		; set cps equal to grain freq, creating a single cycle of a trainlet inside each grain
-	inumpartIndx		chnget "iPartikkel\$NTrainPartials"		
+	inumpartIndx		chnget "iPartikkel$N.TrainPartials"		
 	knumpartials		table inumpartIndx, giSinglePreset_M		; number of partials in trainlet
-	ichromaIndx		chnget "iPartikkel\$NTrainChroma"	
+	ichromaIndx		chnget "iPartikkel$N.TrainChroma"	
 	kchroma			table ichromaIndx, giSinglePreset_M		; chroma, falloff of partial amplitude towards sr/2
 	; filtering to avoid zipper noise in preset interpolation (and modmatrix updates)
 	;kchroma			= kchroma+kdenorm
@@ -303,20 +306,20 @@ id$N		= $N
 
 
 ; masking
-	igainmasks		= gigainmasks$N					; gain masking table, amplitude for individual grains
-	ichannelmasks		= gichannelmasks$N				; channel masking table, output routing for individual grains
+	igainmasks		= gigainmasks$N.					; gain masking table, amplitude for individual grains
+	ichannelmasks		= gichannelmasks$N.				; channel masking table, output routing for individual grains
 
-	irandMaskIndx		chnget "iPartikkel\$NRandomMask"		
+	irandMaskIndx		chnget "iPartikkel$N.RandomMask"		
 	krandommask		table irandMaskIndx, giSinglePreset_M		; random masking (muting) of individual grains
 
 	; mix of source waves
-	iwaveamptab	= giwavemasks$N				; wave mix masking, gain per source waveform per grain, 
+	iwaveamptab	= giwavemasks$N.				; wave mix masking, gain per source waveform per grain, 
 	; xy mixing surface for the 4 source waves, plus separate control for trainlet mix in relation to the other 4 sources
-	iWaveXIndx	chnget "iPartikkel\$NWaveX"
+	iWaveXIndx	chnget "iPartikkel$N.WaveX"
 	kWaveX		table iWaveXIndx, giSinglePreset_M
-	iWaveYIndx	chnget "iPartikkel\$NWaveY"
+	iWaveYIndx	chnget "iPartikkel$N.WaveY"
 	kWaveY		table iWaveYIndx, giSinglePreset_M
-	iTrainAmpIndx	chnget "iPartikkel\$NTrainAmp"
+	iTrainAmpIndx	chnget "iPartikkel$N.TrainAmp"
 	kTrainAmp	table iTrainAmpIndx, giSinglePreset_M
 
 
@@ -351,35 +354,35 @@ id$N		= $N
 
 ; select source waveforms
 		
-	kwaveform1	chnget "Partikkel\$NSourceWave1"		; source audio waveform 1
-	kwaveform2	chnget "Partikkel\$NSourceWave2"		; source audio waveform 1
-	kwaveform3	chnget "Partikkel\$NSourceWave3"		; source audio waveform 1
-	kwaveform4	chnget "Partikkel\$NSourceWave4"		; source audio waveform 1
+	kwaveform1	chnget "Partikkel$N.SourceWave1"		; source audio waveform 1
+	kwaveform2	chnget "Partikkel$N.SourceWave2"		; source audio waveform 1
+	kwaveform3	chnget "Partikkel$N.SourceWave3"		; source audio waveform 1
+	kwaveform4	chnget "Partikkel$N.SourceWave4"		; source audio waveform 1
 	
 ; independent transposition for each source wave
-	iwavfreq1Indx	chnget "iPartikkel\$NGrainPitch1"
+	iwavfreq1Indx	chnget "iPartikkel$N.GrainPitch1"
 	kwavfreq1	table iwavfreq1Indx, giSinglePreset_M	
-	iwavfreq2Indx	chnget "iPartikkel\$NGrainPitch2"
+	iwavfreq2Indx	chnget "iPartikkel$N.GrainPitch2"
 	kwavfreq2	table iwavfreq2Indx, giSinglePreset_M	
-	iwavfreq3Indx	chnget "iPartikkel\$NGrainPitch3"
+	iwavfreq3Indx	chnget "iPartikkel$N.GrainPitch3"
 	kwavfreq3	table iwavfreq3Indx, giSinglePreset_M	
-	iwavfreq4Indx	chnget "iPartikkel\$NGrainPitch4"
+	iwavfreq4Indx	chnget "iPartikkel$N.GrainPitch4"
 	kwavfreq4	table iwavfreq4Indx, giSinglePreset_M	
 
 ; original key for each source wave (used to modify kwavfreqN in calcWaveformParameters
-	korig_key1	chnget "Partikkel\$NSourceWave1_orig"
-	korig_key2	chnget "Partikkel\$NSourceWave2_orig"
-	korig_key3	chnget "Partikkel\$NSourceWave3_orig"
-	korig_key4	chnget "Partikkel\$NSourceWave4_orig"
+	korig_key1	chnget "Partikkel$N.SourceWave1_orig"
+	korig_key2	chnget "Partikkel$N.SourceWave2_orig"
+	korig_key3	chnget "Partikkel$N.SourceWave3_orig"
+	korig_key4	chnget "Partikkel$N.SourceWave4_orig"
 
 ; time pointer (phase). This can be independent for each source waveform.
-	isamplepos1Indx	chnget "iPartikkel\$NSamplepos1"	
+	isamplepos1Indx	chnget "iPartikkel$N.Samplepos1"	
 	ksamplepos1	table isamplepos1Indx, giSinglePreset_M	; time pointer into source waveform 1
-	isamplepos2Indx	chnget "iPartikkel\$NSamplepos2"	
+	isamplepos2Indx	chnget "iPartikkel$N.Samplepos2"	
 	ksamplepos2	table isamplepos2Indx, giSinglePreset_M	; time pointer into source waveform 1
-	isamplepos3Indx	chnget "iPartikkel\$NSamplepos3"	
+	isamplepos3Indx	chnget "iPartikkel$N.Samplepos3"	
 	ksamplepos3	table isamplepos3Indx, giSinglePreset_M	; time pointer into source waveform 1
-	isamplepos4Indx	chnget "iPartikkel\$NSamplepos4"	
+	isamplepos4Indx	chnget "iPartikkel$N.Samplepos4"	
 	ksamplepos4	table isamplepos4Indx, giSinglePreset_M	; time pointer into source waveform 1
 
 /* (source dependent, moved to $calcWaveformParameters macro)
@@ -392,14 +395,14 @@ id$N		= $N
 ; calculation of timepoint, transpose, and waveform selection when using live sampled segments
 	kstartFollow 	chnget	"kstartFollow"			; the current buffer write position for live follow mode
 	isample_release	chnget	"liveSamplingReleaseTime"	; the live sampling release (fade out) time
-$calcWaveformParameters(1)
-$calcWaveformParameters(2)
-$calcWaveformParameters(3)
-$calcWaveformParameters(4)
+$calcWaveformParameters(1'$N.)
+$calcWaveformParameters(2'$N.)
+$calcWaveformParameters(3'$N.)
+$calcWaveformParameters(4'$N.)
 
 /*
 ;********** test for play direction related specifically to live sampled segments
-;kwavekey$W		= (kduration*cent(kwavfreq$W)*kwavfreq > (1-ksamplepos$W)*kSoundLen$W*1000 ? kwavekey\$W_tmp*-1 : kwavekey\$W_tmp)
+;kwavekey$W.		= (kduration*cent(kwavfreq$W.)*kwavfreq > (1-ksamplepos$W.)*kSoundLen$W.*1000 ? kwavekey$W._tmp*-1 : kwavekey$W._tmp)
 	printk2 kwavekey1
 	Stest1	sprintfk "part1:%f, part2:%f", \
 		kduration*cent(kwavfreq1)*kwavfreq, (1-ksamplepos1dirtest)*kSoundLen1*1000
@@ -459,7 +462,7 @@ a1,a2,a3,a4,a5,a6,a7,a8 partikkel agrainfreq, kdistribution, idisttab, async, ke
                	  ifmamptab, ifmenv, icosine, kTrainCps, knumpartials, \
                	  kchroma, ichannelmasks, krandommask, kwaveform1a, kwaveform2a, kwaveform3a, kwaveform4a, \
                	  iwaveamptab, asamplepos1, asamplepos2, asamplepos3, asamplepos4, \
-               	  kwavekey1, kwavekey2, kwavekey3, kwavekey4, imax_grains, id$N
+               	  kwavekey1, kwavekey2, kwavekey3, kwavekey4, imax_grains, id$N.
 /*
 a1 = a1*kamp
 a2 = a2*kamp
@@ -471,7 +474,7 @@ a7 = a7*kamp
 a8 = a8*kamp
 */
 
-gapulse$N,gaphase$N	partikkelsync	id$N
+gapulse$N.,gaphase$N.	partikkelsync	id$N.
 
 
 ;***************************************************
@@ -479,7 +482,7 @@ gapulse$N,gaphase$N	partikkelsync	id$N
 
 	kWdispStartMask	table	0, iwaveamptab	
 	kWdispEndMask	table	1, iwaveamptab	
-	kWdispTrig	downsamp gapulse$N, ksmps 	; downsampling averaged over ksmps to make sure we catch the impulse
+	kWdispTrig	downsamp gapulse$N., ksmps 	; downsampling averaged over ksmps to make sure we catch the impulse
 	kWdispTrig	= kWdispTrig*ksmps		; normalize, after gain loss in averaging
 	kWdispIndex	init -1
 	kWdispIndex	= kWdispIndex+kWdispTrig

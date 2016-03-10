@@ -21,8 +21,8 @@
 
 #define interpolateMaskingTable(T)#
 ; Hyper Vectorial Synthesis used to morph between masking tables (each preset slot has separate masking tables)
-	iOutTab		= $T			; table to write interpolated values to
-	iSnapTab 	= \$T_Master		; preset values to be interpolated stored in the master preset table
+	iOutTab		= $T.			; table to write interpolated values to
+	iSnapTab 	= $T._Master		; preset values to be interpolated stored in the master preset table
 	iMaskSize	= giMaskSize
 	; [, iConfigTab]			; could set interpolation method separately for each parameter here
 			hvs2 kx, ky, iMaskSize, inumPointsX, inumPointsY, iOutTab, iPositionsTab, iSnapTab ;[, iConfigTab]
@@ -30,29 +30,29 @@
 
 #define interpolateMaskAndModscale(N) #
 ; interpolate (morph) masking tables
-$interpolateMaskingTable(gidisttab$N)
-$interpolateMaskingTable(gifreqstartmasks\$N_A)
-$interpolateMaskingTable(gifreqstartmasks\$N_B)
-$interpolateMaskingTable(gifreqendmasks\$N_A)
-$interpolateMaskingTable(gifreqendmasks\$N_B)
-$interpolateMaskingTable(gifmampmasks\$N_A)
-$interpolateMaskingTable(gifmampmasks\$N_B)
-$interpolateMaskingTable(gigainmasks\$N_A)
-$interpolateMaskingTable(gigainmasks\$N_B)
-$interpolateMaskingTable(gichannelmasks\$N_A)
-$interpolateMaskingTable(gichannelmasks\$N_B)
-$interpolateMaskingTable(giwavemasks\$N_A)
-$interpolateMaskingTable(giwavemasks\$N_B)
+$interpolateMaskingTable(gidisttab$N.)
+$interpolateMaskingTable(gifreqstartmasks$N._A)
+$interpolateMaskingTable(gifreqstartmasks$N._B)
+$interpolateMaskingTable(gifreqendmasks$N._A)
+$interpolateMaskingTable(gifreqendmasks$N._B)
+$interpolateMaskingTable(gifmampmasks$N._A)
+$interpolateMaskingTable(gifmampmasks$N._B)
+$interpolateMaskingTable(gigainmasks$N._A)
+$interpolateMaskingTable(gigainmasks$N._B)
+$interpolateMaskingTable(gichannelmasks$N._A)
+$interpolateMaskingTable(gichannelmasks$N._B)
+$interpolateMaskingTable(giwavemasks$N._A)
+$interpolateMaskingTable(giwavemasks$N._B)
 
 ; interpolate ModScale (modulation matrix) table
-			hvs2 kx, ky, giNumModulators*giNumParameters, inumPointsX, inumPointsY, giModScale$N, iPositionsTab, giModScale\$N_Master ;[, iConfigTab]
+			hvs2 kx, ky, giNumModulators*giNumParameters, inumPointsX, inumPointsY, giModScale$N., iPositionsTab, giModScale$N._Master ;[, iConfigTab]
 
 #
 
 #define interpolateModfuncTable(T)#
 ; Hyper Vectorial Synthesis used to morph between modulator transfer function tables (each preset slot has separate modfunc tables)
-	iOutTab		= $T			; table to write interpolated values to
-	iSnapTab 	= \$T_Master		; preset values to be interpolated stored in the master preset table
+	iOutTab		= $T.			; table to write interpolated values to
+	iSnapTab 	= $T._Master		; preset values to be interpolated stored in the master preset table
 	iFuncSize	= giModFuncSize
 	; [, iConfigTab]			; could set interpolation method separately for each parameter here
 			hvs2 kx, ky, iFuncSize, inumPointsX, inumPointsY, iOutTab, iPositionsTab, iSnapTab ;[, iConfigTab]
