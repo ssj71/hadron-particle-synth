@@ -1,7 +1,7 @@
 <CsoundSynthesizer>
 <CsOptions>
- -odac1 -Q3 -M4
-; -Q1 -d -odac1
+ -odac -Q3 -Ma
+; -Q1 -d -odac
 </CsOptions>
 <CsInstruments>
 
