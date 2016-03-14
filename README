@@ -3,3 +3,14 @@ this is a fork of the hadron particle synth to make whatever changes are necessa
 This repo does not include the necessary states directory because they are under a proprietary license. To get these necessary files go to http://www.partikkelaudio.com/downloads/hadron-particle-synthesizer and download the source code. Then you can copy the states directory and contents into this repository dir and run. You can (and should) buy additional states (which are like presets) from the partikkelaudio site.
 
 I'm really just to book-keeper here. Many thanks to all who have helped me figure out how to run it. And of course huge thanks to the creators for releasing source code that makes this possible.
+
+There is an updated version of Hadron downloadable from:
+http://oeyvind.teks.no/ftp/Hadron/hadron_standalone_cs6.zip
+This repo is now just a couple tweaks from that version, but you still need to copy the states directory from that download.
+
+Once you have this repo and the states directory in place open a terminal in this directory and issue:
+csound Hadron_Csound_Standalone.csd
+
+and you will see the gui pop up. Use jack to connect the audio and midi (alsa midi only).
+
+To change the preset you can edit hadron_cs_standalone_sco.inc to select different .spst files in the states directory. You can also just uncomment the second section there that sets Hadron up as an audio effect.
