@@ -1,6 +1,6 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac -Ma -+rtmidi=alsa -b2048 -B4096 -f
+-odac -+rtmidi=alsaseq -Ma ; -b2048 -B4096 -f
 </CsOptions>
 <CsInstruments>
 
